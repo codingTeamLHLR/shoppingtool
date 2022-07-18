@@ -5,18 +5,13 @@
 
         <form action="/products" method="GET">
         
-            <label>
-               
-                <input type="text" name="word">
-            </label>
+            <input type="text" name="word" placeholder="product">
         
-            <label>
-                Maximum Price:
-                <input type="text" name="maxPrice">
-            </label>
+
+            <input type="text" name="maxPrice" placeholder="maximum price">
 
             <label> 
-                Select List:
+                List:
                 <select name="list" multiple>
 
                 {{#each result}}
@@ -40,20 +35,29 @@
 
 <p>__________________________</p>
 
+
+<section id="allProducts">
+
 {{#each result}}
 <div class="product">
-    <p>{{this.name}}</p>
-    <p>{{this.price}}</p>
-    <p>{{this.notes}}</p>
-
-    <a href="{{this.link}}">Link</a>
     <img src="{{this.image}}"/>
 
+    <div class="productHeader">
+        <p>{{this.name}}</p>
+        <p class="price">Price: {{this.price}} €</p>
+    </div>
 
-            <a href="/products/{{this._id}}/edit">Edit</a>
+    <p class="notes">Notes:<br>{{this.notes}}</p>
 
-        <form action="/products/{{this._id}}/delete" method="POST">
-            <button>Delete</button>
-        </form>
+    <button><a href="{{this.link}}">Product Page</a></button>
+    <br>
+    <button><a href="/products/{{this._id}}/edit">Edit</a></button>
+
+    <form action="/products/{{this._id}}/delete" method="POST">
+        <button>Delete</button>
+    </form>
+
 </div>
 {{/each}}
+
+</section>
