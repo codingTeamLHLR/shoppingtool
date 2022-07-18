@@ -2,13 +2,16 @@ const router = require("express").Router();
 const mongoose = require("mongoose");
 
 const Product = require("../models/Product.model");
+const User = require("../models/User.model");
 
-
+const isLoggedIn = require("../middleware/isLoggedIn");
+const session = require("express-session");
 
 
 //view products
-router.get("/", (req, res, next) => {
-    Product.find()
+router.get("/", isLoggedIn, (req, res, next) => {
+
+ Product.find({user: req.session.user._id})
     .then(result => res.render("products/products-list", {result}))
     .catch(error => {
         console.log("Error while trying to reach DB", error);
@@ -17,18 +20,19 @@ router.get("/", (req, res, next) => {
 })
 
 // create new product entry
-router.get("/create", (req, res, next) => {
+router.get("/create", isLoggedIn, (req, res, next) => {
     res.render("products/product-create");
 })
 
 
-router.post("/create", (req, res, next) => {
+router.post("/create", isLoggedIn, (req, res, next) => {
     const productDetails = {
         name: req.body.name,
         price: req.body.price,
         notes: req.body.notes, 
         image: req.body.image,
-        link: req.body.link
+        link: req.body.link,
+        user: req.session.user._id
       };
 
     Product.create(productDetails)
@@ -39,7 +43,7 @@ router.post("/create", (req, res, next) => {
 })
 
 // change product entry
-router.get("/:productId/edit", (req, res, next) => {
+router.get("/:productId/edit", isLoggedIn, (req, res, next) => {
     const { productId } = req.params
     
     Product.findById(productId)
@@ -51,7 +55,7 @@ router.get("/:productId/edit", (req, res, next) => {
 })
 
 
-router.post("/:productId/edit", (req, res, next) => {
+router.post("/:productId/edit", isLoggedIn, (req, res, next) => {
     const { productId } = req.params
 
     const productDetails = {
@@ -70,7 +74,7 @@ router.post("/:productId/edit", (req, res, next) => {
 })
 
 
-router.post("/:productId/delete", (req, res, next) => {
+router.post("/:productId/delete", isLoggedIn, (req, res, next) => {
     const {productId} = req.params;
     
     Product.findByIdAndRemove(productId)

@@ -12,7 +12,8 @@ const productSchema = new Schema(
     },
     notes: String, 
     image: String,
-    link: String
+    link: String, 
+    user: {type: Schema.Types.ObjectId, ref: 'User'}
   }
 );
 

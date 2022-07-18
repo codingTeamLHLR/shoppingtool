@@ -23,6 +23,12 @@ const projectName = "shoppingtool";
 
 app.locals.appTitle = `${capitalized(projectName)} created with IronLauncher`;
 
+
+app.use((req, res, next) => {
+    res.locals.session = req.session; // allow access to session data from layout.hbs
+    next()
+});
+
 // 👇 Start handling routes here
 const index = require("./routes/index.routes");
 app.use("/", index);
@@ -32,6 +38,9 @@ app.use("/auth", authRoutes);
 
 const productRoutes = require("./routes/product.routes");
 app.use("/products", productRoutes)
+
+const userRoutes = require("./routes/user.routes");
+app.use("/user", userRoutes)
 
 
 
