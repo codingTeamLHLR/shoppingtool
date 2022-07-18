@@ -19,8 +19,8 @@
                 Select List:
                 <select name="list" multiple>
 
-                {{#each lists}}
-                    <option value="{{this._id}}">{{this.name}}</option>
+                {{#each result}}
+                    <option value="{{this.list._id}}">{{this.list.name}}</option>
                 {{/each}}
                     
                 </select>
@@ -40,7 +40,7 @@
 
 <p>__________________________</p>
 
-{{#each products}}
+{{#each result}}
 <div class="product">
     <p>{{this.name}}</p>
     <p>{{this.price}}</p>

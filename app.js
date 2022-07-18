@@ -23,6 +23,12 @@ const projectName = "shoppingtool";
 
 app.locals.appTitle = `${capitalized(projectName)} created with IronLauncher`;
 
+
+app.use((req, res, next) => {
+    res.locals.session = req.session; // allow access to session data from layout.hbs
+    next()
+});
+
 // 👇 Start handling routes here
 const index = require("./routes/index.routes");
 app.use("/", index);
@@ -34,7 +40,11 @@ const productRoutes = require("./routes/product.routes");
 app.use("/products", productRoutes)
 
 const listRoutes = require("./routes/list.routes");
-app.use("/lists", listRoutes)
+app.use("/lists", listRoutes);
+
+const userRoutes = require("./routes/user.routes");
+app.use("/user", userRoutes);
+
 
 
 // ❗ To handle errors. Routes that don't exist or errors that you handle in specific routes

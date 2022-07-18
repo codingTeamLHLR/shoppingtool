@@ -4,16 +4,54 @@ const mongoose = require("mongoose");
 const Product = require("../models/Product.model");
 const List = require("../models/List.model");
 
+const User = require("../models/User.model");
+
+const isLoggedIn = require("../middleware/isLoggedIn");
+const session = require("express-session");
+
 
 let list;
 let maxPrice;
 
 
 
-router.get("/", (req, res, next) => {
-    let data = {} ;
+// router.get("/", (req, res, next) => {
+//     let data = {} ;
+//     let filter = {};
 
-    let filter = {};
+//     if(req.query.word) {
+//         filter.name = {"$regex": req.query.word, "$options": "i"}
+//       }
+
+//     if (req.query.maxPrice) {
+//         const price = parseFloat(req.query.maxPrice);
+//         filter.price = {$lte: price}
+//     }
+//     if (req.query.list) {
+//         const list = req.query.list;
+//         filter.list = list
+//     }
+
+//     List.find()
+//     .then( result => {
+//         data.lists = result;
+//         return Product.find(filter)
+//     })
+//     .then(result => {
+//         data.products = result;
+//         console.log(data);
+//         res.render("products/products-list", data)
+//     })
+
+
+
+//view products
+router.get("/", isLoggedIn, (req, res, next) => {
+
+    let data = {} ;
+    let filter = {
+        user: req.session.user._id
+    };
 
     if(req.query.word) {
         filter.name = {"$regex": req.query.word, "$options": "i"}
@@ -28,15 +66,12 @@ router.get("/", (req, res, next) => {
         filter.list = list
     }
 
-    List.find()
-    .then( result => {
-        data.lists = result;
-        return Product.find(filter)
-    })
+    Product.find(filter)
+    .populate("list")
     .then(result => {
-        data.products = result;
-        console.log(data);
-        res.render("products/products-list", data)
+        //data.products = result;
+        console.log(result);
+        res.render("products/products-list", {result})
     })
     .catch(error => {
         console.log("Error while trying to reach DB", error);
@@ -45,11 +80,8 @@ router.get("/", (req, res, next) => {
 
 
 
-
-
-
 // create new product entry
-router.get("/create", (req, res, next) => {
+router.get("/create", isLoggedIn, (req, res, next) => {
 
     List.find()
         .then( lists => {
@@ -59,14 +91,15 @@ router.get("/create", (req, res, next) => {
 })
 
 
-router.post("/create", (req, res, next) => {
+router.post("/create", isLoggedIn, (req, res, next) => {
     const productDetails = {
         name: req.body.name,
         price: req.body.price,
         notes: req.body.notes, 
         image: req.body.image,
         link: req.body.link,
-        list: req.body.list
+        list: req.body.list,
+        user: req.session.user._id
       };
 
     Product.create(productDetails)
@@ -77,7 +110,7 @@ router.post("/create", (req, res, next) => {
 })
 
 // change product entry
-router.get("/:productId/edit", (req, res, next) => {
+router.get("/:productId/edit", isLoggedIn, (req, res, next) => {
     const { productId } = req.params
     
     Product.findById(productId)
@@ -89,7 +122,7 @@ router.get("/:productId/edit", (req, res, next) => {
 })
 
 
-router.post("/:productId/edit", (req, res, next) => {
+router.post("/:productId/edit", isLoggedIn, (req, res, next) => {
     const { productId } = req.params
 
     const productDetails = {
@@ -109,7 +142,7 @@ router.post("/:productId/edit", (req, res, next) => {
 })
 
 
-router.post("/:productId/delete", (req, res, next) => {
+router.post("/:productId/delete", isLoggedIn, (req, res, next) => {
     const {productId} = req.params;
     
     Product.findByIdAndRemove(productId)
@@ -118,8 +151,6 @@ router.post("/:productId/delete", (req, res, next) => {
             console.log("Error while trying to reach DB", error);
         })
 })
-
-
 
 
 
