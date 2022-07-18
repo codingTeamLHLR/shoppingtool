@@ -1,15 +1,9 @@
-<h1>All Products</h1>
-
-
-    <section id="search">
+    <section id="searchAndFilter">
 
         <form action="/products" method="GET">
-        
-            <input type="text" name="word" placeholder="product">
-        
 
-            <input type="text" name="maxPrice" placeholder="maximum price">
-
+            <input id="search" type="text" name="word" placeholder="What are you looking for?">
+            <input id="maxPrice" type="text" name="maxPrice" placeholder="maximum price">
             <label> 
                 List:
                 <select name="list" multiple>
@@ -20,44 +14,52 @@
                     
                 </select>
             </label>
-
             {{!-- 
             {{#each lists}}
                 <label><input type="checkbox" name="{{this.name}}" value="{{this._id}}"><span>{{this.name}}</span></label>
             {{/each}} --}}
 
-            <button type="submit" >Submit</button>
-
+            <button  type="submit" > Find </button>
         </form>
-
-
     </section>
 
-<p>__________________________</p>
 
 
 <section id="allProducts">
 
 {{#each result}}
 <div class="product">
+
+    {{#if image}}
     <img src="{{this.image}}"/>
+    {{else}}
+    <img src="https://t4.ftcdn.net/jpg/04/70/29/97/360_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg"/>
+    {{/if}}
+
+
 
     <div class="productHeader">
-        <p>{{this.name}}</p>
-        <p class="price">Price: {{this.price}} €</p>
+        <p class="productName">{{this.name}}</p>
+        <p class="productPrice">{{this.price}} €</p>
+        <button id="linkButton"><a href="{{this.link}}" target="_blank">Product Page</a></button>
     </div>
 
+    {{#if notes}}
     <p class="notes">Notes:<br>{{this.notes}}</p>
+    {{/if}}
 
-    <button><a href="{{this.link}}">Product Page</a></button>
-    <br>
-    <button><a href="/products/{{this._id}}/edit">Edit</a></button>
-
-    <form action="/products/{{this._id}}/delete" method="POST">
-        <button>Delete</button>
-    </form>
+    <div class="editButtons">
+        <button id="editButton"><a href="/products/{{this._id}}/edit">Edit</a></button>
+        <form id="/products/{{this._id}}/delete" method="POST">
+            <button class="editButton">Delete</button>
+        </form>
+    </div>
 
 </div>
 {{/each}}
+
+<div class="product">
+     <a href="/products/create">Create new Product</a>
+</div>
 
 </section>
