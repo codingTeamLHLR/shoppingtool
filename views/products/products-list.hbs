@@ -1,6 +1,46 @@
 <h1>All Products</h1>
 
-{{#each result}}
+
+    <section id="search">
+
+        <form action="/products" method="GET">
+        
+            <label>
+               
+                <input type="text" name="word">
+            </label>
+        
+            <label>
+                Maximum Price:
+                <input type="text" name="maxPrice">
+            </label>
+
+            <label> 
+                Select List:
+                <select name="list" multiple>
+
+                {{#each lists}}
+                    <option value="{{this._id}}">{{this.name}}</option>
+                {{/each}}
+                    
+                </select>
+            </label>
+
+            {{!-- 
+            {{#each lists}}
+                <label><input type="checkbox" name="{{this.name}}" value="{{this._id}}"><span>{{this.name}}</span></label>
+            {{/each}} --}}
+
+            <button type="submit" >Submit</button>
+
+        </form>
+
+
+    </section>
+
+<p>__________________________</p>
+
+{{#each products}}
 <div class="product">
     <p>{{this.name}}</p>
     <p>{{this.price}}</p>
