@@ -1,0 +1,19 @@
+<h1>All Products</h1>
+
+{{#each result}}
+<div class="product">
+    <p>{{this.name}}</p>
+    <p>{{this.price}}</p>
+    <p>{{this.notes}}</p>
+
+    <a href="{{this.link}}">Link</a>
+    <img src="{{this.image}}"/>
+
+
+            <a href="/products/{{this._id}}/edit">Edit</a>
+
+        <form action="/products/{{this._id}}/delete" method="POST">
+            <button>Delete</button>
+        </form>
+</div>
+{{/each}}

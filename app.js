@@ -19,7 +19,7 @@ const app = express();
 require("./config")(app);
 
 const capitalized = require("./utils/capitalized");
-const projectName = "myproyect";
+const projectName = "shoppingtool";
 
 app.locals.appTitle = `${capitalized(projectName)} created with IronLauncher`;
 
@@ -29,6 +29,9 @@ app.use("/", index);
 
 const authRoutes = require("./routes/auth.routes");
 app.use("/auth", authRoutes);
+
+const productRoutes = require("./routes/product.routes");
+app.use("/products", productRoutes)
 
 
 

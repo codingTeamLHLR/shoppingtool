@@ -1,7 +1,7 @@
 document.addEventListener(
   "DOMContentLoaded",
   () => {
-    console.log("myproyect JS imported successfully!");
+    console.log("shoppingtool JS imported successfully!");
   },
   false
 );

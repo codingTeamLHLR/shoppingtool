@@ -1,0 +1,30 @@
+<h1>Edit Product </h1>
+
+<form action="/products/{{this._id}}/edit" method="POST">
+    <label>
+        Name:
+        <input type="text" name="name" value="{{this.name}}" required>
+    </label>
+
+    <label>
+        Price:
+        <input type="Number" name="price" value="{{this.price}}">
+    </label>
+
+    <label>
+        Notes:
+        <input type="text" name="notes" value="{{this.notes}}">
+    </label>
+
+    <label>
+        Link to image:
+        <input type="rul" name="image" value="{{this.image}}">
+    </label>
+
+    <label>
+        Link to Product:
+        <input type="url" name="link" value="{{this.link}}">
+    </label>
+    
+    <button type="submit">Save Changes</button>
+</form>

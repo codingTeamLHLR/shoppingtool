@@ -9,16 +9,18 @@ const userSchema = new Schema(
       lowercase: true,
       trim: true,
       unique: true,
-      match: [/^\S+@\S+\.\S+$/, 'Please use a valid email address.']
+      match: [/^\S+@\S+\.\S+$/, 'Please use a valid email address.'],
       // unique: true -> Ideally, should be unique, but its up to you
     },
     passwordHash: {
       type: String,
-      required: [true, 'Password is required.']
+      required: [true, 'Password is required.'],
+    }
   },
     // this second object adds extra properties: `createdAt` and `updatedAt`
-    timestamps: true,
-}
+    {
+      timestamps: true,
+    }
 );
 
 const User = model("User", userSchema);
