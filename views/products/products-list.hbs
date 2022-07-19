@@ -2,32 +2,45 @@
 
         <form action="/products" method="GET">
 
-            <input id="search" type="text" name="word" placeholder="What are you looking for?">
-            <input id="maxPrice" type="text" name="maxPrice" placeholder="maximum price">
-            <label> 
-                List:
-                <select name="list" multiple>
-
-                {{#each result}}
-                    <option value="{{this.list._id}}">{{this.list.name}}</option>
-                {{/each}}
-                    
-                </select>
-            </label>
-            {{!-- 
-            {{#each lists}}
-                <label><input type="checkbox" name="{{this.name}}" value="{{this._id}}"><span>{{this.name}}</span></label>
-            {{/each}} --}}
+            <input id="search" type="text" name="word" placeholder="What are you looking for?"  value="{{data.filter.name.$regex}}">
+            <input id="maxPrice" type="text" name="maxPrice" placeholder="Max. price" value="{{data.filter.price.$lte}}">
 
             <button  type="submit" > Find </button>
+
+            <br>
+            <input type="radio" id="html" name="list" value="null" onChange="this.form.submit()" >
+            <label>Show All</label>
+            {{#each data.lists}}
+
+                <input type="radio" id="html" name="list" value="{{this._id}}" onChange="this.form.submit()" onclick="myFunction()" >
+                <label>{{this.name}}</label>
+
+                {{!-- <?php if(!isset($_POST['list']) || (isset($_POST['list']) && $_POST['list'] == '{{this._id}}')) echo ' checked="checked"'?> --}}
+                {{!-- <?php if(isset($_POST['list'])) echo "checked='checked'"; ?> --}}
+
+            {{/each}}
+
+            <button onclick="myFunction()">Click me</button>
+
+            <script>
+            function myFunction() {
+                alert('Button was clicked!');
+            }
+            </script>
+
         </form>
+
+        {{!-- {{#each data.filter}}
+            <p>{{this}}</p>
+        {{/each}} --}}
+
     </section>
 
 
 
 <section id="allProducts">
 
-{{#each result}}
+{{#each data.products}}
 <div class="product">
 
     {{#if image}}
