@@ -53,12 +53,13 @@ let maxPrice;
 
 
 
-let filter = {};
+
 
 
 //view products
 router.get("/", isLoggedIn, (req, res, next) => {
 
+    let filter = {};
     let data = {} ;
 
     // let filter = {
@@ -90,18 +91,17 @@ router.get("/", isLoggedIn, (req, res, next) => {
         delete filter.list
     }
 
-    console.log(filter);
     data.filter = filter;
 
     List.find()
     .then( result => {
         data.lists = result;
+
         return Product.find(filter);
     })
     //.populate("list")
     .then(result => {
         data.products = result;
-        //console.log(data);
         res.render("products/products-list", {data})
     })
     .catch(error => {
