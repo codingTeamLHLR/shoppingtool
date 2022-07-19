@@ -5,19 +5,19 @@
             <input id="search" type="text" name="word" placeholder="What are you looking for?"  value="{{data.filter.name.$regex}}">
             <input id="maxPrice" type="text" name="maxPrice" placeholder="Max. price" value="{{data.filter.price.$lte}}">
 
-            <button  type="submit" > Find </button>
+            <button id="findButton" type="submit" > Find </button>
 
             <br>
 
-            <input type="radio" id="html" name="list" value="null" onChange="this.form.submit()" >
+            <input class="listOption" type="radio" id="html" name="list" value="null" onChange="this.form.submit()" >
             <label>Show All</label>
 
 
             {{#each data.lists}}
                 {{#if (eq this._id ../data.filter.list) }}
-                    <input type="radio" id="html" name="list" value="{{this._id}}" onChange="this.form.submit()" checked >
+                    <input class="listOption" type="radio" id="html" name="list" value="{{this._id}}" onChange="this.form.submit()" checked >
                 {{else}}
-                    <input type="radio" id="html" name="list" value="{{this._id}}" onChange="this.form.submit()"  >
+                    <input class="listOption" type="radio" id="html" name="list" value="{{this._id}}" onChange="this.form.submit()"  >
                 {{/if}}
                 <label>{{this.name}}</label>
             {{/each}}
