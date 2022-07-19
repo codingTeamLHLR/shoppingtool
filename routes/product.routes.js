@@ -9,6 +9,15 @@ const User = require("../models/User.model");
 const isLoggedIn = require("../middleware/isLoggedIn");
 const session = require("express-session");
 
+const metascraper = require('metascraper')([
+    require('metascraper-amazon')(),
+    require('@samirrayani/metascraper-shopping')(),
+    require('metascraper-title')(),
+    require('metascraper-image')(),
+    require('metascraper-url')(),
+]);
+const got = require('got');
+
 
 let list;
 let maxPrice;
@@ -100,9 +109,7 @@ router.get("/", isLoggedIn, (req, res, next) => {
     })
 })
 
-
-
-// create new product entry
+// create new product entry with link
 router.get("/create", isLoggedIn, (req, res, next) => {
 
     List.find()
@@ -114,6 +121,55 @@ router.get("/create", isLoggedIn, (req, res, next) => {
 
 
 router.post("/create", isLoggedIn, (req, res, next) => {
+
+    'use strict'
+    
+    const goShopping = async () => {
+      const targetUrl = req.body.link;
+      const { body: html, url } = await got(targetUrl);
+      const metadata = await metascraper({ html, url });
+    
+    const productDetails = {
+        name: metadata.title,
+        price: metadata.price,
+        notes: req.body.notes, 
+        image: metadata.image,
+        link: metadata.url,
+        list: req.body.list,
+        user: req.session.user._id
+      };
+
+    Product.create(productDetails)
+        .then( () => res.redirect("/products"))
+        .catch(error => {
+            console.log("Error while trying to reach DB", error);
+        })
+    };
+    
+    goShopping()
+        .catch(error => {
+            console.log("Error creating product from link", error);
+            return res.status(400).render("products/product-create-manually", {
+                errorMessage: "Error creating product from link. Please enter details manually.",
+            });
+        })
+
+})
+
+
+// create new product entry manually
+router.get("/create-manually", isLoggedIn, (req, res, next) => {
+
+    List.find()
+        .then( lists => {
+            res.render("products/product-create-manually", {lists});
+        })
+
+})
+
+
+router.post("/create-manually", isLoggedIn, (req, res, next) => {
+
     const productDetails = {
         name: req.body.name,
         price: req.body.price,
