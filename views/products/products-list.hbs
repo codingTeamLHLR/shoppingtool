@@ -2,32 +2,34 @@
 
         <form action="/products" method="GET">
 
-            <input id="search" type="text" name="word" placeholder="What are you looking for?">
-            <input id="maxPrice" type="text" name="maxPrice" placeholder="maximum price">
-            <label> 
-                List:
-                <select name="list" multiple>
+            <input id="search" type="text" name="word" placeholder="What are you looking for?"  value="{{data.filter.name.$regex}}">
+            <input id="maxPrice" type="text" name="maxPrice" placeholder="Max. price" value="{{data.filter.price.$lte}}">
 
-                {{#each result}}
-                    <option value="{{this.list._id}}">{{this.list.name}}</option>
-                {{/each}}
-                    
-                </select>
-            </label>
-            {{!-- 
-            {{#each lists}}
-                <label><input type="checkbox" name="{{this.name}}" value="{{this._id}}"><span>{{this.name}}</span></label>
-            {{/each}} --}}
+            <button id="findButton" type="submit" > Find </button>
 
-            <button  type="submit" > Find </button>
+            <br>
+
+            <input class="listOption" type="radio" id="html" name="list" value="null" onChange="this.form.submit()" >
+            <label>Show All</label>
+
+
+            {{#each data.lists}}
+                {{#if (eq this._id ../data.filter.list) }}
+                    <input class="listOption" type="radio" id="html" name="list" value="{{this._id}}" onChange="this.form.submit()" checked >
+                {{else}}
+                    <input class="listOption" type="radio" id="html" name="list" value="{{this._id}}" onChange="this.form.submit()"  >
+                {{/if}}
+                <label>{{this.name}}</label>
+            {{/each}}
+
         </form>
-    </section>
 
+    </section>
 
 
 <section id="allProducts">
 
-{{#each result}}
+{{#each data.products}}
 <div class="product">
 
     {{#if image}}

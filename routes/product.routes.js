@@ -23,7 +23,6 @@ let list;
 let maxPrice;
 
 
-
 // router.get("/", (req, res, next) => {
 //     let data = {} ;
 //     let filter = {};
@@ -54,31 +53,56 @@ let maxPrice;
 
 
 
+
+
+
 //view products
 router.get("/", isLoggedIn, (req, res, next) => {
 
+    let filter = {};
     let data = {} ;
-    let filter = {
-        user: req.session.user._id
-    };
+
+    // let filter = {
+    //     user: req.session.user._id
+    // };
+
+    filter.user = req.session.user._id
 
     if(req.query.word) {
         filter.name = {"$regex": req.query.word, "$options": "i"}
-      }
+    }
+    if(!req.query.word) {
+        delete filter.name;
+    }
 
     if (req.query.maxPrice) {
         const price = parseFloat(req.query.maxPrice);
         filter.price = {$lte: price}
     }
-    if (req.query.list) {
+    if (!req.query.maxPrice) {
+        delete filter.price;
+    }
+
+    if (req.query.list && req.query.list != "null") {
         const list = req.query.list;
         filter.list = list
     }
+    if (req.query.list && req.query.list == "null") {
+        delete filter.list
+    }
 
-    Product.find(filter)
-    .populate("list")
+    data.filter = filter;
+
+    List.find()
+    .then( result => {
+        data.lists = result;
+
+        return Product.find(filter);
+    })
+    //.populate("list")
     .then(result => {
-        res.render("products/products-list", {result})
+        data.products = result;
+        res.render("products/products-list", {data})
     })
     .catch(error => {
         console.log("Error while trying to reach DB", error);
