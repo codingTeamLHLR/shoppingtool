@@ -58,12 +58,6 @@ app.use("/products", productRoutes)
 const listRoutes = require("./routes/list.routes");
 app.use("/lists", listRoutes);
 
-const userRoutes = require("./routes/user.routes");
-app.use("/user", userRoutes);
-
-const testRoutes = require("./routes/test.routes");
-app.use("/test", testRoutes);
-
 
 
 // ❗ To handle errors. Routes that don't exist or errors that you handle in specific routes
