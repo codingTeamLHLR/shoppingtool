@@ -190,9 +190,19 @@ router.post("/create-manually", isLoggedIn, (req, res, next) => {
 // change product entry
 router.get("/:productId/edit", isLoggedIn, (req, res, next) => {
     const { productId } = req.params
-    
-    Product.findById(productId)
-        .then (productDetails => res.render("products/product-edit", productDetails))
+
+    data = {}
+
+    List.find()
+        .then( lists => {
+            data.lists = lists;
+            return Product.findById(productId)
+        })
+        .then (productDetails => {
+            data.product = productDetails;
+            // console.log(data);
+            res.render("products/product-edit", data)
+        })
         .catch( error => {
             console.log("Error while trying to reach DB", error);
             next(error);

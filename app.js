@@ -36,6 +36,13 @@ hbs.registerHelper('eq', function () {
     });
 });
 
+hbs.registerHelper('eq2', function () {
+    const args = Array.prototype.slice.call(arguments, 0, -1);
+    return args.every(function (expression) {
+        return args[0] == expression.toString();
+    });
+});
+
 
 
 // 👇 Start handling routes here
