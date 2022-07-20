@@ -1,14 +1,22 @@
-<form action="/auth/signup" method="POST">
-   <label> Email
-      <input type="email" name="email">
-   </label>
-   <label> Password
-      <input type="password" name="passwordHash">
-   </label>
+<section class="authSection">
 
-   <button type="submit">Submit</button>
-</form>
+   <form class="authForm" action="/auth/signup" method="POST">
+   <h1>Sign Up</h1>
+      <p>Please put in your email and password to create an account.</p>
+      <label> 
+         <input type="email" name="email" placeholder="email">
+      </label>
+      <label>
+         <input type="password" name="passwordHash" placeholder="********">
+      </label>
 
-{{#if errorMessage}}
-   {{errorMessage}}
-{{/if}}
+      {{#if errorMessage}}
+         <p class="errorMessage">{{errorMessage}}</p>
+      {{/if}}
+
+      <button class="authSendButton" type="submit">Sign Up</button>
+
+      <a href="/auth/login">I already have an account</a>
+   </form>
+
+</section>
