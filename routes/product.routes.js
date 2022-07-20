@@ -195,7 +195,7 @@ router.get("/:productId/edit", isLoggedIn, (req, res, next) => {
 
     data = {}
 
-    List.find()
+    List.find({user: req.session.user._id})
         .then( lists => {
             data.lists = lists;
             return Product.findById(productId)
