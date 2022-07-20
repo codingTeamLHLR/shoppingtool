@@ -93,7 +93,7 @@ router.get("/", isLoggedIn, (req, res, next) => {
 
     data.filter = filter;
 
-    List.find()
+    List.find({user: req.session.user._id})
     .then( result => {
         data.lists = result;
 
@@ -112,7 +112,7 @@ router.get("/", isLoggedIn, (req, res, next) => {
 // create new product entry with link
 router.get("/create", isLoggedIn, (req, res, next) => {
 
-    List.find()
+    List.find({user: req.session.user._id})
         .then( lists => {
             res.render("products/product-create", {lists});
         })
@@ -128,6 +128,8 @@ router.post("/create", isLoggedIn, (req, res, next) => {
       const targetUrl = req.body.link;
       const { body: html, url } = await got(targetUrl);
       const metadata = await metascraper({ html, url });
+
+      console.log(metadata);
     
     const productDetails = {
         name: metadata.title,
@@ -160,7 +162,7 @@ router.post("/create", isLoggedIn, (req, res, next) => {
 // create new product entry manually
 router.get("/create-manually", isLoggedIn, (req, res, next) => {
 
-    List.find()
+    List.find({user: req.session.user._id})
         .then( lists => {
             res.render("products/product-create-manually", {lists});
         })
@@ -193,14 +195,14 @@ router.get("/:productId/edit", isLoggedIn, (req, res, next) => {
 
     data = {}
 
-    List.find()
+    List.find({user: req.session.user._id})
         .then( lists => {
             data.lists = lists;
             return Product.findById(productId)
         })
         .then (productDetails => {
             data.product = productDetails;
-            // console.log(data);
+            console.log(data);
             res.render("products/product-edit", data)
         })
         .catch( error => {
