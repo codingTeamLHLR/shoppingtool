@@ -1,8 +1,10 @@
 body {
   padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  font-family: 'Quicksand', sans-serif;
+  font-size: 14px;
   margin: 0;
   padding: 0;
+  background-color: rgb(234, 238, 242);
 }
 
 a {
@@ -13,23 +15,29 @@ a {
 
 
 nav {
-  background-color: darkgray;
   display: flex;
   justify-content: space-between;
   padding: 30px 10vw;
+  display: flex;
+  align-items: center;
 }
 
 nav a {
   text-decoration: none;
-  color: white;
+  color: black;
   padding: 0 15px;
   font-weight: 600;
-  font-size: larger;
+  font-size: small;
 }
 
 nav h1 {
   padding: 0;
   margin: 0;
+}
+
+nav img {
+  width: 100px;
+  height: auto;
 }
 
 #allProducts {
@@ -42,6 +50,7 @@ nav h1 {
 /* Product Card - Sizing*/
 
 .product {
+  background-color: white;
   position: relative;
   box-sizing: border-box;
   width: 22%;
@@ -91,7 +100,6 @@ nav h1 {
 
 .productName {
   width:80%;
-  font-size: large;
   margin: 0;
   overflow: hidden;
   display: -webkit-box;
@@ -155,6 +163,7 @@ input {
   height: 40px;
   border-radius: 20px;
   border: none;
+  background-color: rgb(255, 189, 21);
 }
 
 input[type='radio'] { 
@@ -165,9 +174,9 @@ input[type='radio'] {
 
 .authSection {
   width: 100%;
-  height: 100%;
-
+  height: auto;
 }
+
 .authForm {
   width: 30%;
   margin: auto;
@@ -176,7 +185,6 @@ input[type='radio'] {
   left: 35%;
   -ms-transform: translateY(-50%);
   transform: translateY(-50%);
-
 }
 
 .authForm input {
@@ -197,14 +205,43 @@ input[type='radio'] {
   color: red
 }
 
-
-
+#overlay {
+  background-color: rgb(234, 238, 242, 0.8);
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 2; /* Sit on top */
+}
 
 #overlayModal {
-  background-color: blue;
+  background-color: white;
+  box-shadow: 2px 3px 17px -2px rgba(0,0,0,0.22);
   position: absolute;
-  left: 300px;
+  width: 30%;
+  height: auto;
+  top: 20vh;
+  left: 35%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
   z-index: 1; /* Sit on top */
-  width: 300px; /* Full width */
-  height: 450px; /* Full height */
+  border-radius: 5px;
+}
+
+.productForm {
+  padding: 10px;
+} 
+
+.productForm input {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+}
+
+.productForm button {
+  width: 100%;
+  height: 40px;
+  border-radius: 20px;
+  border: none;
+  background-color: rgb(255, 189, 21);
 }

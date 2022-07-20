@@ -24,24 +24,13 @@
     </section>
 
 
-{{!--     <div id="overlayModal" class="modal">
-        <p>This is an overlay!</p>
+
+{{#if data.showCreateModal}}
+    <div id="overlay">
+        {{> productcreate}}
     </div>
+{{/if}}
 
-    <button onclick="openOverlay()">Open Overlay</button>
-    <button onclick="closeOverlay()">Close Overlay</button>
-
-    <script>
-            function openOverlay() {
-                var overlay = document.getElementById("overlayModal");
-                overlay.style.display = "block"
-            }
-
-            function closeOverlay() {
-                var overlay = document.getElementById("overlayModal");
-                overlay.style.display = "none";
-            }
-    </script> --}}
 
 
 <section id="allProducts">

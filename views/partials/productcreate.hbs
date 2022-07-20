@@ -1,0 +1,24 @@
+<div id="overlayModal" class="modal">
+
+  <form class="productForm" action="/products/create" method="POST">
+
+      <h1>Create Product</h1>
+    
+      <input type="url" name="link" placeholder="Paste link to product here">
+      {{!-- <input type="text" name="notes" placeholder="notes"> --}}
+
+    <label> 
+          Add to List:
+          <select name="list" multiple>
+            {{#each data.lists}}
+              <p>{{this.name}}</p>
+              <option value="{{this._id}}">{{this.name}}</option>
+            {{/each}}
+          </select>
+    </label>
+
+      
+    <button type="submit">Create</button>
+  </form>
+
+</div>
