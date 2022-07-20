@@ -4,17 +4,20 @@ const mongoose = require("mongoose");
 const List = require("../models/List.model");
 const Product = require("../models/Product.model");
 
+const isLoggedIn = require("../middleware/isLoggedIn");
+const session = require("express-session");
 
 
-router.get("/create", (req, res, next) => {
+router.get("/create", isLoggedIn, (req, res, next) => {
     res.render("lists/list-create");
 })
 
 
-router.post("/create", (req, res, next) => {
+router.post("/create", isLoggedIn, (req, res, next) => {
     const listDetails = {
         name: req.body.name,
-        description: req.body.description
+        description: req.body.description,
+        user: req.session.user._id
       };
 
     List.create(listDetails)

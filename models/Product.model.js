@@ -15,6 +15,9 @@ const productSchema = new Schema(
         ref: "List"
       },
     user: {type: Schema.Types.ObjectId, ref: 'User'}
+  },
+  {
+    timestamps: true,
   }
 );
 
