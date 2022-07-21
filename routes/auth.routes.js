@@ -29,12 +29,6 @@ router.post("/signup", isLoggedOut, (req, res) => {
     });
   }
 
-  // if (passwordHash.length < 8) {
-  //   return res.status(400).render("auth/signup", {
-  //     errorMessage: "Your password needs to be at least 8 characters long.",
-  //   });
-  // }
-
   //   ! This use case is using a regular expression to control for special characters and min length
   
   const regex = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/;
@@ -162,7 +156,7 @@ router.post("/login", isLoggedOut, (req, res, next) => {
         }
         req.session.user = user;
         // req.session.user = user._id; // ! better and safer but in this case we saving the entire user object
-        return res.redirect("/product");
+        return res.redirect("/products");
       });
     })
 

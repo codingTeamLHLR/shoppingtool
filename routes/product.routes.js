@@ -8,6 +8,7 @@ const User = require("../models/User.model");
 
 const isLoggedIn = require("../middleware/isLoggedIn");
 const session = require("express-session");
+const getFilter = require("../utils/getFilter")
 
 const metascraper = require('metascraper')([
     require('metascraper-amazon')(),
@@ -18,41 +19,11 @@ const metascraper = require('metascraper')([
 ]);
 const got = require('got');
 
-let list;
-let maxPrice;
-
 //view products
 router.get("/", isLoggedIn, (req, res, next) => {
 
-    let filter = {};
+    let filter = getFilter(req);
     let data = {} ;
-
-    filter.user = req.session.user._id
-
-    if(req.query.word) {
-        filter.name = {"$regex": req.query.word, "$options": "i"}
-    }
-    if(!req.query.word) {
-        delete filter.name;
-    }
-
-    if (req.query.maxPrice) {
-        const price = parseFloat(req.query.maxPrice);
-        filter.price = {$lte: price}
-    }
-    if (!req.query.maxPrice) {
-        delete filter.price;
-    }
-
-    console.log(req.query.list)
-
-    if (req.query.list && req.query.list != "null") {
-        const list = req.query.list;
-        filter.list = list
-    }
-    if (req.query.list && req.query.list == "null") {
-        delete filter.list
-    }
 
     data.filter = filter;
 
@@ -74,35 +45,11 @@ router.get("/", isLoggedIn, (req, res, next) => {
 
 
 router.get("/create", isLoggedIn, (req, res, next) => {
-    let filter = {};
+
+    let filter = getFilter(req);
     let data = {} ;
 
     data.showCreateModal = true;
-
-    filter.user = req.session.user._id
-
-    if(req.query.word) {
-        filter.name = {"$regex": req.query.word, "$options": "i"}
-    }
-    if(!req.query.word) {
-        delete filter.name;
-    }
-
-    if (req.query.maxPrice) {
-        const price = parseFloat(req.query.maxPrice);
-        filter.price = {$lte: price}
-    }
-    if (!req.query.maxPrice) {
-        delete filter.price;
-    }
-
-    if (req.query.list && req.query.list != "null") {
-        const list = req.query.list;
-        filter.list = list
-    }
-    if (req.query.list && req.query.list == "null") {
-        delete filter.list
-    }
 
     data.filter = filter;
 
@@ -175,24 +122,24 @@ router.get("/create-manually", isLoggedIn, (req, res, next) => {
 })
 
 
-router.post("/create-manually", isLoggedIn, (req, res, next) => {
+// router.post("/create-manually", isLoggedIn, (req, res, next) => {
 
-    const productDetails = {
-        name: req.body.name,
-        price: req.body.price,
-        notes: req.body.notes, 
-        image: req.body.image,
-        link: req.body.link,
-        list: req.body.list,
-        user: req.session.user._id
-      };
+//     const productDetails = {
+//         name: req.body.name,
+//         price: req.body.price,
+//         notes: req.body.notes, 
+//         image: req.body.image,
+//         link: req.body.link,
+//         list: req.body.list,
+//         user: req.session.user._id
+//       };
 
-    Product.create(productDetails)
-        .then( () => res.redirect("/products"))
-        .catch(error => {
-            console.log("Error while trying to reach DB", error);
-        })
-})
+//     Product.create(productDetails)
+//         .then( () => res.redirect("/products"))
+//         .catch(error => {
+//             console.log("Error while trying to reach DB", error);
+//         })
+// })
 
 
 

@@ -3,29 +3,36 @@
         <form action="/products" method="GET">
 
             <input id="search" type="text" name="word" placeholder="What are you looking for?"  value="{{data.filter.name.$regex}}">
-            <input id="maxPrice" type="text" name="maxPrice" placeholder="Max. price" value="{{data.filter.price.$lte}}">
+            <input id="maxPrice" type="number" name="maxPrice" placeholder="Max. price" value="{{data.filter.price.$lte}}">
 
             <button id="findButton" type="submit" name="list" value="{{data.filter.list}}"> Find </button>
 
             <br>
 
-            <div class="list-button">
+            <div class="lists">
 
-                {{#if data.filter.list}}
-                    <button type="submit" name="list" value="null">Show All</button>
-                {{else}}
-                    <button type="submit" class="active" name="list" value="null">Show All</button>
-                {{/if}}
+                <div class="list-tags">
 
-            
-                {{#each data.lists}}
-                    
-                    {{#if (eq this._id ../data.filter.list) }}
-                        <button class="active" type="submit" name="list" value="{{this._id}}">{{this.name}}</button>
+                    {{#if data.filter.list}}
+                        <button type="submit" name="list" value="null">Show All</button>
                     {{else}}
-                        <button name="list" type="submit" value="{{this._id}}">{{this.name}}</button>
+                        <button type="submit" class="active" name="list" value="null">Show All</button>
                     {{/if}}
-                {{/each}}
+
+                
+                    {{#each data.lists}}
+                        
+                        {{#if (eq this._id ../data.filter.list) }}
+                            <button class="active" type="submit" name="list" value="{{this._id}}">{{this.name}}</button>
+                        {{else}}
+                            <button name="list" type="submit" value="{{this._id}}">{{this.name}}</button>
+                        {{/if}}
+                    {{/each}}
+
+                </div>
+
+                <a class="manage-lists-link" href="/lists/listview">manage lists</a>
+
             </div>
 
             
@@ -46,6 +53,20 @@
         {{> productedit}}
     </div>
 {{/if}}
+
+{{#if data.showListviewModal}}
+    <div id="overlay">
+        {{> listview}}
+    </div>
+{{/if}}
+
+{{#if data.showListEditModal}}
+    <div id="overlay">
+        {{> listview}}
+    </div>
+{{/if}}
+
+
 
 
 
