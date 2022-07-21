@@ -4,61 +4,20 @@ const mongoose = require("mongoose");
 const List = require("../models/List.model");
 const Product = require("../models/Product.model");
 
+const User = require("../models/User.model");
+
 const isLoggedIn = require("../middleware/isLoggedIn");
 const session = require("express-session");
+const getFilter = require("../utils/getFilter")
 
-
-router.get("/create", isLoggedIn, (req, res, next) => {
-    res.render("lists/list-create");
-})
-
-
-router.post("/create", isLoggedIn, (req, res, next) => {
-    const listDetails = {
-        name: req.body.name,
-        description: req.body.description,
-        user: req.session.user._id
-      };
-
-    List.create(listDetails)
-        .then( () => res.redirect("/products"))
-        .catch(error => {
-            console.log("Error while trying to reach DB", error);
-        })
-})
 
 
 router.get("/listview", isLoggedIn, (req, res, next) =>     {
 
-    let filter = {};
+    let filter = getFilter(req);
     let data = {} ;
 
     data.showListviewModal = true;
-
-    filter.user = req.session.user._id
-
-    if(req.query.word) {
-        filter.name = {"$regex": req.query.word, "$options": "i"}
-    }
-    if(!req.query.word) {
-        delete filter.name;
-    }
-
-    if (req.query.maxPrice) {
-        const price = parseFloat(req.query.maxPrice);
-        filter.price = {$lte: price}
-    }
-    if (!req.query.maxPrice) {
-        delete filter.price;
-    }
-
-    if (req.query.list && req.query.list != "null") {
-        const list = req.query.list;
-        filter.list = list
-    }
-    if (req.query.list && req.query.list == "null") {
-        delete filter.list
-    }
 
     data.filter = filter;
 
@@ -69,7 +28,6 @@ router.get("/listview", isLoggedIn, (req, res, next) =>     {
             return Product.find(filter)
         .then(result => {
             data.products = result;
-            //console.log(data);
             res.render("products/products-list", {data})
         })
         .catch(error => {
@@ -78,56 +36,46 @@ router.get("/listview", isLoggedIn, (req, res, next) =>     {
     })
 })
 
+
+router.get("/create", isLoggedIn, (req, res, next) => {
+    
+    const listDetails = { user: req.session.user._id };
+
+    List.create(listDetails)
+    .then( list => {
+        res.redirect(`/lists/${list._id}/edit`)
+    })
+    .catch(error => {
+        console.log("Error creating list", error);
+    })
+})
+
+
 router.get("/:listId/edit", isLoggedIn, (req, res, next) => {
 
     const { listId } = req.params
 
-    let filter = {};
+    let filter = getFilter(req);
     let data = {} ;
-    
-    data.showListEditModal = true;
-    
-    filter.user = req.session.user._id
-    
-    if(req.query.word) {
-        filter.name = {"$regex": req.query.word, "$options": "i"}
-    }
-    if(!req.query.word) {
-        delete filter.name;
-    }
-    
-    if (req.query.maxPrice) {
-        const price = parseFloat(req.query.maxPrice);
-        filter.price = {$lte: price}
-    }
-    if (!req.query.maxPrice) {
-        delete filter.price;
-    }
-    
-    if (req.query.list && req.query.list != "null") {
-        const list = req.query.list;
-        filter.list = list
-    }
-    if (req.query.list && req.query.list == "null") {
-        delete filter.list
-    }
-    
+
+    data.showListDetailsModal = true;
+
     data.filter = filter;
-    
+
     List.find({user: req.session.user._id})
     .then( result => {
         data.lists = result;
-    
+
         return Product.find(filter);
     })
     .then(result => {
         data.products = result;
-        return Product.findById(productId);
+        
+        return List.findById(listId)
     })
-    .then (productDetails => {
-        data.product = productDetails;
-        console.log(data);
-        res.render("products/products-list", {data})
+    .then((list) => {
+    data.list = list;
+       res.render("products/products-list", {data})
     })
     .catch(error => {
         console.log("Error while trying to reach DB", error);
@@ -135,31 +83,35 @@ router.get("/:listId/edit", isLoggedIn, (req, res, next) => {
 })
 
 
-// router.post("/:listId/edit", isLoggedIn, (req, res, next) => {
-//     const { listId } = req.params
+router.post("/:listId/edit", isLoggedIn, (req, res, next) => {
+    const { listId } = req.params
 
-//     const listDetails = {
-//         name: req.body.name,
-//         description: req.body.description,
-//       };
+    const listDetails = {
+        name: req.body.name,
+        description: req.body.description,
+        user: req.session.user._id
+    };
 
-//     List.findByIdAndUpdate(listId, listDetails)
-//       .then( () => res.redirect("/products/products-list"))
-//       .catch(error => {
-//         console.log("Error while trying to reach DB", error);
-//     })
-// })
+    List.findByIdAndUpdate(listId, listDetails)
+      .then( () => res.redirect("/lists/listview"))
+      .catch(error => {
+        console.log("Error while trying to reach DB", error);
+    })
+})
 
 
-// router.post("/:listId/delete", isLoggedIn, (req, res, next) => {
-//     const {listId} = req.params;
+router.get("/:listId/delete", isLoggedIn, (req, res, next) => {
+    const {listId} = req.params;
     
-//     List.findByIdAndRemove(listId)
-//         .then( () => res.redirect("products/products-list"))
-//         .catch(error => {
-//             console.log("Error while trying to reach DB", error);
-//         })
-// })
+    Product.deleteMany({list: listId})
+        .then(() => {
+            return List.findByIdAndRemove(listId)
+        })
+        .then( () => res.redirect("/lists/listview"))
+        .catch(error => {
+            console.log("Error while trying to reach DB", error);
+        })
+})
 
 
 

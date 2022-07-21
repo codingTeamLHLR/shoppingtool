@@ -19,9 +19,6 @@ const metascraper = require('metascraper')([
 ]);
 const got = require('got');
 
-// let list;
-// let maxPrice;
-// let filter = {};
 
 //view products
 router.get("/", isLoggedIn, (req, res, next) => {
@@ -37,7 +34,6 @@ router.get("/", isLoggedIn, (req, res, next) => {
 
         return Product.find(filter);
     })
-    //.populate("list")
     .then(result => {
         data.products = result;
         res.render("products/products-list", {data})
@@ -51,35 +47,9 @@ router.get("/", isLoggedIn, (req, res, next) => {
 router.get("/create", isLoggedIn, (req, res, next) => {
 
     let filter = getFilter(req);
-    // let filter = {};
     let data = {} ;
 
     data.showCreateModal = true;
-
-    // filter.user = req.session.user._id
-
-    // if(req.query.word) {
-    //     filter.name = {"$regex": req.query.word, "$options": "i"}
-    // }
-    // if(!req.query.word) {
-    //     delete filter.name;
-    // }
-
-    // if (req.query.maxPrice) {
-    //     const price = parseFloat(req.query.maxPrice);
-    //     filter.price = {$lte: price}
-    // }
-    // if (!req.query.maxPrice) {
-    //     delete filter.price;
-    // }
-
-    // if (req.query.list && req.query.list != "null") {
-    //     const list = req.query.list;
-    //     filter.list = list
-    // }
-    // if (req.query.list && req.query.list == "null") {
-    //     delete filter.list
-    // }
 
     data.filter = filter;
 
@@ -91,7 +61,6 @@ router.get("/create", isLoggedIn, (req, res, next) => {
     })
     .then(result => {
         data.products = result;
-        //console.log(data);
         res.render("products/products-list", {data})
     })
     .catch(error => {
@@ -163,29 +132,6 @@ router.get("/create-manually", isLoggedIn, (req, res, next) => {
 
 })
 
-
-// router.post("/create-manually", isLoggedIn, (req, res, next) => {
-
-//     const productDetails = {
-//         name: req.body.name,
-//         price: req.body.price,
-//         notes: req.body.notes, 
-//         image: req.body.image,
-//         link: req.body.link,
-//         list: req.body.list,
-//         user: req.session.user._id
-//       };
-
-//     Product.create(productDetails)
-//         .then( () => res.redirect("/products"))
-//         .catch(error => {
-//             console.log("Error while trying to reach DB", error);
-//         })
-// })
-
-
-
-
 router.get("/:productId/edit", isLoggedIn, (req, res, next) => {
 
     const { productId } = req.params
@@ -210,7 +156,6 @@ router.get("/:productId/edit", isLoggedIn, (req, res, next) => {
     })
     .then (productDetails => {
         data.product = productDetails;
-        console.log(data);
         res.render("products/products-list", {data})
     })
     .catch(error => {
@@ -250,9 +195,5 @@ router.post("/:productId/delete", isLoggedIn, (req, res, next) => {
             console.log("Error while trying to reach DB", error);
         })
 })
-
-
-
-
 
 module.exports = router;

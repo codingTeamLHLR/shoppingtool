@@ -47,7 +47,7 @@ hbs.registerHelper('eq2', function () {
 
 hbs.registerPartials( __dirname + "/views/partials"); // config. for partials
 
-// 👇 Start handling routes here
+// routes 
 const index = require("./routes/index.routes");
 app.use("/", index);
 
@@ -62,7 +62,7 @@ app.use("/lists", listRoutes);
 
 
 
-// ❗ To handle errors. Routes that don't exist or errors that you handle in specific routes
+// handle errors
 require("./error-handling")(app);
 
 module.exports = app;

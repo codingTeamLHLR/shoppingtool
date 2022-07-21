@@ -1,6 +1,6 @@
 <div id="overlayModal" class="modal">
 
-    <a href="/products/">
+    <a id="closingButton" href="/products/">
         <img src="/images/004-close.png" alt="">
     </a>
 
@@ -10,12 +10,12 @@
 
         <label>
             Name:
-            <input type="text" name="name" value="data.list.name" required>
+            <input type="text" name="name" value="{{data.list.name}}" required>
         </label>
 
         <label>
             Description:
-            <input type="text" name="description" value="data.list.description">
+            <input type="text" name="description" value="{{data.list.description}}">
         </label>
 
         <button type="submit">Save Changes</button>

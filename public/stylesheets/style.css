@@ -1,9 +1,18 @@
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+.body-wrapper {
+  margin: 0 0 80px 0;
+}
+
 body {
   padding: 50px;
   font-family: 'Inter', sans-serif;
   font-weight: 300;
   font-size: 14px;
-  margin: 0;
+  margin: 0 0 20px 0;
   padding: 0;
   background-color: rgb(234, 238, 242);
 }
@@ -282,7 +291,7 @@ input {
 
 .manage-lists-link {
   color:rgb(255, 189, 21);
-  padding: 0 2vw 0 0;
+  padding: 0 5vw 0 0;
   text-decoration: underline;
 }
 
@@ -360,11 +369,11 @@ input {
   width: 100%
 }
 
-.productForm {
+.productForm, .listForm {
   padding: 10px;
 } 
 
-.productForm input {
+.productForm input, .listForm input {
   display: block;
   width: 100%;
   padding: 10px;
@@ -382,7 +391,7 @@ input {
   background-color: rgb(255, 189, 21, 0.5);
 }
 
-.productForm button {
+.productForm button, .listForm button {
   width: 100%;
   height: 40px;
   border-radius: 20px;
@@ -390,7 +399,7 @@ input {
   background-color: rgb(255, 189, 21);
 }
 
-.productForm label {
+.productForm label, .listForm label {
   font-family: 'Quicksand', sans-serif;
   font-size: small;
   font-weight: 700;
@@ -406,17 +415,9 @@ input {
 
 }
 
-footer {
-  text-align: center;
-  margin: 30px;
-  position: absolute;
-  bottom: 0;
-  left: 40vw;
-}
-
 /* List overlay */
 .manage-lists{
-  padding: 20px;
+  padding: 10px;
 }
 
 .manage-lists ul{
@@ -434,4 +435,17 @@ footer {
 
 #create-list{
   color: rgb(255, 189, 21);
+}
+
+#list-options a {
+  padding: 0 10px;
+}
+
+
+footer {
+  text-align: center;
+  padding: 20px;
+  position: absolute;
+  bottom: 0;
+  left: 40vw;
 }
