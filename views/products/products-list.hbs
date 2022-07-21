@@ -5,39 +5,51 @@
             <input id="search" type="text" name="word" placeholder="What are you looking for?"  value="{{data.filter.name.$regex}}">
             <input id="maxPrice" type="text" name="maxPrice" placeholder="Max. price" value="{{data.filter.price.$lte}}">
 
-            <button id="findButton" type="submit" > Find </button>
+            <button id="findButton" type="submit" name="list" value="{{data.filter.list}}"> Find </button>
 
             <br>
 
             <div class="list-button">
 
-                <input class="listOption" type="radio" id="html" name="list" value="null" onChange="this.form.submit()" >
-                <label class="list-label">Show All</label>
-            
+                {{#if data.filter.list}}
+                    <button type="submit" name="list" value="null">Show All</button>
+                {{else}}
+                    <button type="submit" class="active" name="list" value="null">Show All</button>
+                {{/if}}
+
             
                 {{#each data.lists}}
                     
                     {{#if (eq this._id ../data.filter.list) }}
-                        <input class="listOption" type="radio" id="html" name="list" value="{{this._id}}" onChange="this.form.submit()" checked >
+                        <button class="active" type="submit" name="list" value="{{this._id}}">{{this.name}}</button>
                     {{else}}
-                        <input class="listOption" type="radio" id="html" name="list" value="{{this._id}}" onChange="this.form.submit()"  >
+                        <button name="list" type="submit" value="{{this._id}}">{{this.name}}</button>
                     {{/if}}
-
-                    <label class="list-label">{{this.name}}</label>
                 {{/each}}
             </div>
-        
+
         </form>
     </section>
 
 
-
-{{#if data.showCreateModal}}
-    <div id="overlay">
-        {{> productcreate}}
+{{!--     <div id="overlayModal" class="modal">
+        <p>This is an overlay!</p>
     </div>
-{{/if}}
 
+    <button onclick="openOverlay()">Open Overlay</button>
+    <button onclick="closeOverlay()">Close Overlay</button>
+
+    <script>
+            function openOverlay() {
+                var overlay = document.getElementById("overlayModal");
+                overlay.style.display = "block"
+            }
+
+            function closeOverlay() {
+                var overlay = document.getElementById("overlayModal");
+                overlay.style.display = "none";
+            }
+    </script> --}}
 
 
 <section id="allProducts">
