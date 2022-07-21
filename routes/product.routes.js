@@ -26,7 +26,7 @@ const got = require('got');
 //view products
 router.get("/", isLoggedIn, (req, res, next) => {
 
-    // let filter = getFilter(req);
+    let filter = getFilter(req);
     let data = {} ;
 
     data.filter = filter;
@@ -50,13 +50,13 @@ router.get("/", isLoggedIn, (req, res, next) => {
 
 router.get("/create", isLoggedIn, (req, res, next) => {
 
-    // let filter = getFilter(req);
+    let filter = getFilter(req);
     // let filter = {};
     let data = {} ;
 
     data.showCreateModal = true;
 
-    filter.user = req.session.user._id
+    // filter.user = req.session.user._id
 
     // if(req.query.word) {
     //     filter.name = {"$regex": req.query.word, "$options": "i"}
@@ -137,6 +137,7 @@ router.post("/create", isLoggedIn, (req, res, next) => {
             return Product.create(productDetails);
             })
         .then( product => {
+            console.log(product)
             const error =  {errorMessage: "Error creating product from link. Please enter details manually."}
             res.redirect(`${product._id}/edit`)
         }) 
@@ -192,6 +193,8 @@ router.get("/:productId/edit", isLoggedIn, (req, res, next) => {
     let data = {} ;
     
     data.showEditModal = true;
+
+    let filter = getFilter(req);
     
     data.filter = filter;
     

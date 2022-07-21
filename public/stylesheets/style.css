@@ -247,6 +247,8 @@ input {
   color:white;
 }
 
+
+/* List tags area */
 .lists {
   margin: 10px 0;
   display: flex;
@@ -272,7 +274,6 @@ input {
   color: gray;
 }
 
-
 .list-tags .active {
   background-color: rgb(255, 189, 21);
   border-color: transparent;
@@ -282,6 +283,7 @@ input {
 .manage-lists-link {
   color:rgb(255, 189, 21);
   padding: 0 2vw 0 0;
+  text-decoration: underline;
 }
 
 
@@ -404,33 +406,15 @@ input {
 
 }
 
-/* .list-button {
-  position: relative;
-}
-
-.list-button button { 
-  margin: 10px 0 0 0;
-  padding: 5px 10px;
-  cursor: pointer;
-  background-color: white;
-  border: 1px solid lightgray;
-  border-radius: 10px;
-  color: gray;
-  height: 30px;
-  width: auto;
-}
-
-.list-button .active {
-  background-color: rgb(255, 189, 21);
-  border-color: transparent;
-  color: black;
-} */
-
 footer {
   text-align: center;
   margin: 30px;
+  position: absolute;
+  bottom: 0;
+  left: 40vw;
 }
 
+/* List overlay */
 .manage-lists{
   padding: 20px;
 }

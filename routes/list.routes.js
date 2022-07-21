@@ -154,7 +154,7 @@ router.get("/:listId/edit", isLoggedIn, (req, res, next) => {
 // router.post("/:listId/delete", isLoggedIn, (req, res, next) => {
 //     const {listId} = req.params;
     
-//     Product.findByIdAndRemove(listId)
+//     List.findByIdAndRemove(listId)
 //         .then( () => res.redirect("products/products-list"))
 //         .catch(error => {
 //             console.log("Error while trying to reach DB", error);

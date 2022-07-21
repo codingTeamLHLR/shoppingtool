@@ -8,6 +8,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/06946e7cb3.js" crossorigin="anonymous"></script>
     <link href="https://fonts.googleapis.com/css2?family=Sacramento&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="../images/logo.svg">
     <title>{{appTitle}}</title>
     <link rel="stylesheet" href="/stylesheets/style.css" />
   </head>
@@ -16,8 +17,13 @@
 
     <nav>
       <div id="brand">
-        <a href="/"><img src="/images/logo.svg" alt=""></a>
-        <a href="/"><h1 id="brandName">giraffe</h1></a>
+        {{#if session.user}}
+          <a href="/products"><img src="/images/logo.svg" alt=""></a>
+          <a href="/products"><h1 id="brandName">giraffe</h1></a>
+        {{else}}
+          <a href="/"><img src="/images/logo.svg" alt=""></a>
+          <a href="/"><h1 id="brandName">giraffe</h1></a>
+        {{/if}}
       </div>
 
       <div id="user-options">
