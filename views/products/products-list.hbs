@@ -9,17 +9,24 @@
 
             <br>
 
-            <input class="listOption" type="radio" id="html" name="list" value="null" onChange="this.form.submit()" >
-            <label>Show All</label>
+            <div class="list-button">
 
-            {{#each data.lists}}
-                {{#if (eq this._id ../data.filter.list) }}
-                    <input class="listOption" type="radio" id="html" name="list" value="{{this._id}}" onChange="this.form.submit()" checked >
-                {{else}}
-                    <input class="listOption" type="radio" id="html" name="list" value="{{this._id}}" onChange="this.form.submit()"  >
-                {{/if}}
-                <label>{{this.name}}</label>
-            {{/each}}
+                <input class="listOption" type="radio" id="html" name="list" value="null" onChange="this.form.submit()" >
+                <label class="list-label">Show All</label>
+            
+            
+                {{#each data.lists}}
+                    
+                    {{#if (eq this._id ../data.filter.list) }}
+                        <input class="listOption" type="radio" id="html" name="list" value="{{this._id}}" onChange="this.form.submit()" checked >
+                    {{else}}
+                        <input class="listOption" type="radio" id="html" name="list" value="{{this._id}}" onChange="this.form.submit()"  >
+                    {{/if}}
+
+                    <label class="list-label">{{this.name}}</label>
+                {{/each}}
+            </div>
+        
         </form>
     </section>
 
