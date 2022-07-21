@@ -77,9 +77,16 @@
     {{/if}}
 
     <div class="editButtons">
-        <button id="editButton"><a href="/products/{{this._id}}/edit">Edit</a></button>
+        <button id="editButton">
+            <a href="/products/{{this._id}}/edit">
+                <img src="/images/002-edit.png" alt="">
+            </a>
+        </button>
+
         <form action="/products/{{this._id}}/delete" method="POST">
-            <button class="editButton">Delete</button>
+            <button class="editButton">
+                <img src="/images/003-delete.png" alt="">
+            </button>
         </form>
     </div>
 
