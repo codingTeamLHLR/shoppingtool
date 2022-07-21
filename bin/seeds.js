@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 const List = require('../models/List.model');
-const Product = require('../models/Product.model');
 
 const MONGO_URI = require("../utils/consts");
 
@@ -29,25 +28,11 @@ const lists = [
     }
 ];
 
-// const products = [
-//   {
-//     name: "Example Product",
-//     price: 50,
-//     notes: "This will be your favorite products.", 
-//     list: 
-//   }
-// ];
-
-
 mongoose
   .connect(MONGO_URI)
   .then((x) => {
     console.log(`Connected to Mongo! Database name: "${x.connections[0].name}"`);
 
-    // const listsPromise = List.create(lists);
-    // const productsPromise = Product.create(products);
-
-    // return Promise.all([listsPromise, productsPromise])
     return List.create(lists)
   })
   .then(result => {
@@ -55,5 +40,5 @@ mongoose
     mongoose.connection.close();
   })
   .catch((err) => {
-    console.log(`An error occurred while creating books from the DB: ${err}`)
+    console.log(`An error occurred while creating lists from the DB: ${err}`)
   });

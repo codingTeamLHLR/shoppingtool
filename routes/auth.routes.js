@@ -10,6 +10,8 @@ const saltRounds = 10;
 // Require the User model in order to interact with the database
 const User = require("../models/User.model");
 
+const List = require("../models/List.model");
+
 // Require necessary (isLoggedOut and isLiggedIn) middleware in order to control access to specific routes
 const isLoggedOut = require("../middleware/isLoggedOut");
 const isLoggedIn = require("../middleware/isLoggedIn");
@@ -68,8 +70,39 @@ router.post("/signup", isLoggedOut, (req, res) => {
       .then((user) => {
         // Bind the user to the session object
         req.session.user = user;
-        res.redirect("/products");
+
+        const lists = [
+          {
+              name: "My Favorites",
+              description: "My favorite Products.",
+              user: user._id
+          }, 
+          {
+              name: "Clothes",
+              description: "List of clothes on my shopping list.",
+              user: user._id
+          },
+          {
+              name: "Accessories",
+              description: "Accessories I would like to buy.",
+              user: user._id
+          },
+          {
+              name: "Home",
+              description: "Things I need for my home.",
+              user: user._id
+          }, 
+          {
+              name: "Christmas Presents",
+              description: "Presents for my loved ones.",
+              user: user._id
+          }
+      ];
+
+      return List.create(lists)
+       
       })
+      .then((result) => res.redirect("/products"))
       .catch((error) => {
         if (error instanceof mongoose.Error.ValidationError) {
           return res
