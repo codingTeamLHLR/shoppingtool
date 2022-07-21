@@ -44,6 +44,8 @@ router.get("/", isLoggedIn, (req, res, next) => {
         delete filter.price;
     }
 
+    console.log(req.query.list)
+
     if (req.query.list && req.query.list != "null") {
         const list = req.query.list;
         filter.list = list

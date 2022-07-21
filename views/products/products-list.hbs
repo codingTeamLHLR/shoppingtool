@@ -5,25 +5,36 @@
             <input id="search" type="text" name="word" placeholder="What are you looking for?"  value="{{data.filter.name.$regex}}">
             <input id="maxPrice" type="text" name="maxPrice" placeholder="Max. price" value="{{data.filter.price.$lte}}">
 
-            <button id="findButton" type="submit" > Find </button>
+            <button id="findButton" type="submit" name="list" value="{{data.filter.list}}"> Find </button>
 
             <br>
 
-            <input class="listOption" type="radio" id="html" name="list" value="null" onChange="this.form.submit()" >
-            <label>Show All</label>
+            <div class="list-button">
 
-            {{#each data.lists}}
-                {{#if (eq this._id ../data.filter.list) }}
-                    <input class="listOption" type="radio" id="html" name="list" value="{{this._id}}" onChange="this.form.submit()" checked >
+                {{#if data.filter.list}}
+                    <button type="submit" name="list" value="null">Show All</button>
                 {{else}}
-                    <input class="listOption" type="radio" id="html" name="list" value="{{this._id}}" onChange="this.form.submit()"  >
+                    <button type="submit" class="active" name="list" value="null">Show All</button>
                 {{/if}}
-                <label>{{this.name}}</label>
-            {{/each}}
+
+            
+                {{#each data.lists}}
+                    
+                    {{#if (eq this._id ../data.filter.list) }}
+                        <button class="active" type="submit" name="list" value="{{this._id}}">{{this.name}}</button>
+                    {{else}}
+                        <button name="list" type="submit" value="{{this._id}}">{{this.name}}</button>
+                    {{/if}}
+                {{/each}}
+            </div>
+
         </form>
     </section>
 
 
+<div id="overlayModal" class="modal">
+        <p>This is an overlay!</p>
+    </div>
 
 {{#if data.showCreateModal}}
     <div id="overlay">
@@ -36,6 +47,7 @@
         {{> productedit}}
     </div>
 {{/if}}
+
 
 
 
