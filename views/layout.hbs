@@ -7,6 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/06946e7cb3.js" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Sacramento&display=swap" rel="stylesheet">
     <title>{{appTitle}}</title>
     <link rel="stylesheet" href="/stylesheets/style.css" />
   </head>
@@ -14,16 +15,10 @@
   <body>
 
     <nav>
-      <a href="/"><img src="/images/logo.svg" alt=""></a>
-      <a href="/"><h1>{{appTitle}}</h1></a>
-      
-
-      <div id="navigation">
-        <a href="/products">Products</a> |
-        <a href="/products/create">Create new Product from link</a> |
-        <a href="/products/create-manually">Create new Product manually</a> |
-        <a href="/lists/create">Create new List</a>
-      </div> 
+      <div id="brand">
+        <a href="/"><img src="/images/logo.svg" alt=""></a>
+        <a href="/"><h1 id="brandName">giraffe</h1></a>
+      </div>
 
       <div id="user-options">
         {{#if session.user}}
@@ -37,6 +32,11 @@
     </nav>
 
     {{{body}}}
+
+
+  <footer>
+    <p> &copy; 2022 Lisa Hilterhaus <span>&#38;</span> Lara Rockenstein</p>
+  </footer>
 
     <script src="/js/script.js"></script>
   </body>

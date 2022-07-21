@@ -1,6 +1,6 @@
 <div id="overlayModal" class="modal">
 
-  <a href="/products/">
+  <a id="closingButton" href="/products/">
       <img src="/images/004-close.png" alt="">
   </a>
 
@@ -8,18 +8,35 @@
 
       <h1> Product Details</h1>
 
-      {{!-- <img id="productImg" src="{{data.product.image}}" alt=""> --}}
-      <input type="url" name="link" value="{{data.product.link}}">
-      <input type="text" name="name" value="{{data.product.name}}" required>
-      <input type="Number" name="price" value="{{data.product.price}}" step=".01">
-      <input type="rul" name="image" value="{{data.product.image}}">
+      {{#if data.product.image}}
+          <img id="productImg" src="{{data.product.image}}" alt="">
+      {{else}}
+          <img id="productImg" src="https://t4.ftcdn.net/jpg/04/70/29/97/360_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg"/>
+      {{/if}}
+      
+
+      <label> Link to Product
+        <input type="url" name="link" value="{{data.product.link}}">
+      </label>
+
+      <label> Displayed Name
+        <input type="text" name="name" value="{{data.product.name}}" required>
+      </label>
+
+      <label> Price
+        <input type="Number" name="price" value="{{data.product.price}}" step=".01">
+      </label>
+
+      <label> Displayed Image
+        <input type="rul" name="image" value="{{data.product.image}}">
+      </label>
 
     <label> 
           Add to List:
           <select name="list" multiple>
             {{#if data.product.list}}
                 {{#each data.lists}}
-                    {{#if (eq this._id ../data.product.list) }}
+                    {{#if (eq2 this._id ../data.product.list) }}
                         <option value="{{this._id}}" selected >{{this.name}}</option>
                     {{else}}
                         <option value="{{this._id}}" >{{this.name}}</option>
@@ -33,6 +50,41 @@
             {{/if}}
           </select>
     </label>
+
+ {{!-- <div class="list-button">
+        {{#if data.product.list}}
+            {{#each data.lists}}
+                {{#if (eq this._id ../data.product.list) }}
+                    <button class="active" name="list" value="{{this._id}}" onclick="myFunction()" >{{this.name}}</button>
+                {{else}}
+                    <button name="list" value="{{this._id}}" onclick="myFunction()" >{{this.name}}</button>
+                {{/if}}
+            {{/each}}
+
+        {{else}}
+            {{#each data.lists}}
+                  <button type="button" name="list" value="{{this._id}}">{{this.name}}</button>
+            {{/each}}
+        {{/if}}
+  </div>
+
+  <script>
+    function myFunction() {
+      window.alert("Hello world this is an alert!");
+    }
+  </script> --}}
+
+
+
+    {{!-- <div class="list-button">
+        {{#each data.lists}}
+            {{#if (eq this._id ../data.filter.list) }}
+                <button class="active" name="list" value="{{this._id}}">{{this.name}}</button>
+            {{else}}
+                <button name="list" value="{{this._id}}">{{this.name}}</button>
+            {{/if}}
+        {{/each}}
+    </div> --}}
 
     <button type="submit">Save Changes</button>
   </form>

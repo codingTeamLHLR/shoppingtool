@@ -1,6 +1,6 @@
 <div id="overlayModal" class="modal">
 
-  <a href="/products/">
+  <a id="closingButton" href="/products/">
       <img src="/images/004-close.png" alt="">
   </a>
 
@@ -11,18 +11,11 @@
       <input required type="url" name="link" placeholder="Paste link to product here">
       {{!-- <input type="text" name="notes" placeholder="notes"> --}}
 
-    <label> 
-          Add to List:
-          <select name="list" multiple>
-            {{#each data.lists}}
-              <p>{{this.name}}</p>
-              <option value="{{this._id}}">{{this.name}}</option>
-            {{/each}}
-          </select>
-    </label>
-
-      
     <button type="submit">Create</button>
+
+    <p id="link">
+         <a href="/products/create-manually">Insert product details manually</a>
+      </p>
   </form>
 
 </div>

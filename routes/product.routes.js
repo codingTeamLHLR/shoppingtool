@@ -19,10 +19,14 @@ const metascraper = require('metascraper')([
 ]);
 const got = require('got');
 
+// let list;
+// let maxPrice;
+// let filter = {};
+
 //view products
 router.get("/", isLoggedIn, (req, res, next) => {
 
-    let filter = getFilter(req);
+    // let filter = getFilter(req);
     let data = {} ;
 
     data.filter = filter;
@@ -46,10 +50,36 @@ router.get("/", isLoggedIn, (req, res, next) => {
 
 router.get("/create", isLoggedIn, (req, res, next) => {
 
-    let filter = getFilter(req);
+    // let filter = getFilter(req);
+    // let filter = {};
     let data = {} ;
 
     data.showCreateModal = true;
+
+    filter.user = req.session.user._id
+
+    // if(req.query.word) {
+    //     filter.name = {"$regex": req.query.word, "$options": "i"}
+    // }
+    // if(!req.query.word) {
+    //     delete filter.name;
+    // }
+
+    // if (req.query.maxPrice) {
+    //     const price = parseFloat(req.query.maxPrice);
+    //     filter.price = {$lte: price}
+    // }
+    // if (!req.query.maxPrice) {
+    //     delete filter.price;
+    // }
+
+    // if (req.query.list && req.query.list != "null") {
+    //     const list = req.query.list;
+    //     filter.list = list
+    // }
+    // if (req.query.list && req.query.list == "null") {
+    //     delete filter.list
+    // }
 
     data.filter = filter;
 
@@ -103,9 +133,15 @@ router.post("/create", isLoggedIn, (req, res, next) => {
     goShopping()
         .catch(error => {
             console.log("Error creating product from link", error);
-            return res.status(400).render("products/product-create-manually", {
-                errorMessage: "Error creating product from link. Please enter details manually.",
-            });
+            const productDetails = { user: req.session.user._id };
+            return Product.create(productDetails);
+            })
+        .then( product => {
+            const error =  {errorMessage: "Error creating product from link. Please enter details manually."}
+            res.redirect(`${product._id}/edit`)
+        }) 
+        .catch(error => {
+            console.log("Error creating product from link", error);
         })
 
 })
@@ -114,10 +150,15 @@ router.post("/create", isLoggedIn, (req, res, next) => {
 // create new product entry manually
 router.get("/create-manually", isLoggedIn, (req, res, next) => {
 
-    List.find({user: req.session.user._id})
-        .then( lists => {
-            res.render("products/product-create-manually", {lists});
-        })
+    const productDetails = { user: req.session.user._id };
+
+    Product.create(productDetails)
+    .then( product => {
+        res.redirect(`${product._id}/edit`)
+    })
+    .catch(error => {
+        console.log("Error creating product from link", error);
+    })
 
 })
 
@@ -144,43 +185,13 @@ router.get("/create-manually", isLoggedIn, (req, res, next) => {
 
 
 
-
-
-
-
 router.get("/:productId/edit", isLoggedIn, (req, res, next) => {
 
     const { productId } = req.params
 
-    let filter = {};
     let data = {} ;
     
     data.showEditModal = true;
-    
-    filter.user = req.session.user._id
-    
-    if(req.query.word) {
-        filter.name = {"$regex": req.query.word, "$options": "i"}
-    }
-    if(!req.query.word) {
-        delete filter.name;
-    }
-    
-    if (req.query.maxPrice) {
-        const price = parseFloat(req.query.maxPrice);
-        filter.price = {$lte: price}
-    }
-    if (!req.query.maxPrice) {
-        delete filter.price;
-    }
-    
-    if (req.query.list && req.query.list != "null") {
-        const list = req.query.list;
-        filter.list = list
-    }
-    if (req.query.list && req.query.list == "null") {
-        delete filter.list
-    }
     
     data.filter = filter;
     
