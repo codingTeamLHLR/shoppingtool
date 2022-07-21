@@ -29,6 +29,8 @@ app.use((req, res, next) => {
 });
 
 
+
+
 hbs.registerHelper('eq', function () {
     const args = Array.prototype.slice.call(arguments, 0, -1);
     return args.every(function (expression) {
@@ -43,7 +45,7 @@ hbs.registerHelper('eq2', function () {
     });
 });
 
-
+hbs.registerPartials( __dirname + "/views/partials"); // config. for partials
 
 // 👇 Start handling routes here
 const index = require("./routes/index.routes");

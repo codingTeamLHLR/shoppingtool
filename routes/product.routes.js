@@ -18,53 +18,14 @@ const metascraper = require('metascraper')([
 ]);
 const got = require('got');
 
-
 let list;
 let maxPrice;
-
-
-// router.get("/", (req, res, next) => {
-//     let data = {} ;
-//     let filter = {};
-
-//     if(req.query.word) {
-//         filter.name = {"$regex": req.query.word, "$options": "i"}
-//       }
-
-//     if (req.query.maxPrice) {
-//         const price = parseFloat(req.query.maxPrice);
-//         filter.price = {$lte: price}
-//     }
-//     if (req.query.list) {
-//         const list = req.query.list;
-//         filter.list = list
-//     }
-
-//     List.find()
-//     .then( result => {
-//         data.lists = result;
-//         return Product.find(filter)
-//     })
-//     .then(result => {
-//         data.products = result;
-//         console.log(data);
-//         res.render("products/products-list", data)
-//     })
-
-
-
-
-
 
 //view products
 router.get("/", isLoggedIn, (req, res, next) => {
 
     let filter = {};
     let data = {} ;
-
-    // let filter = {
-    //     user: req.session.user._id
-    // };
 
     filter.user = req.session.user._id
 
@@ -110,13 +71,62 @@ router.get("/", isLoggedIn, (req, res, next) => {
 })
 
 // create new product entry with link
+// router.get("/create", isLoggedIn, (req, res, next) => {
+
+//     List.find({user: req.session.user._id})
+//         .then( lists => {
+//             res.render("products/product-create", {lists});
+//         })
+
+// })
+
 router.get("/create", isLoggedIn, (req, res, next) => {
+    let filter = {};
+    let data = {} ;
+
+    data.showCreateModal = true;
+
+    filter.user = req.session.user._id
+
+    if(req.query.word) {
+        filter.name = {"$regex": req.query.word, "$options": "i"}
+    }
+    if(!req.query.word) {
+        delete filter.name;
+    }
+
+    if (req.query.maxPrice) {
+        const price = parseFloat(req.query.maxPrice);
+        filter.price = {$lte: price}
+    }
+    if (!req.query.maxPrice) {
+        delete filter.price;
+    }
+
+    if (req.query.list && req.query.list != "null") {
+        const list = req.query.list;
+        filter.list = list
+    }
+    if (req.query.list && req.query.list == "null") {
+        delete filter.list
+    }
+
+    data.filter = filter;
 
     List.find({user: req.session.user._id})
-        .then( lists => {
-            res.render("products/product-create", {lists});
-        })
+    .then( result => {
+        data.lists = result;
 
+        return Product.find(filter);
+    })
+    .then(result => {
+        data.products = result;
+        console.log(data);
+        res.render("products/products-list", {data})
+    })
+    .catch(error => {
+        console.log("Error while trying to reach DB", error);
+    })
 })
 
 

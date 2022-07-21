@@ -3,12 +3,9 @@
    <form class="authForm" action="/auth/signup" method="POST">
    <h1>Sign Up</h1>
       <p>Please put in your email and password to create an account.</p>
-      <label> 
-         <input type="email" name="email" placeholder="email">
-      </label>
-      <label>
-         <input type="password" name="passwordHash" placeholder="********">
-      </label>
+
+      <input type="email" name="email" placeholder="email">
+      <input type="password" name="passwordHash" placeholder="********">
 
       {{#if errorMessage}}
          <p class="errorMessage">{{errorMessage}}</p>
