@@ -70,15 +70,6 @@ router.get("/", isLoggedIn, (req, res, next) => {
     })
 })
 
-// create new product entry with link
-// router.get("/create", isLoggedIn, (req, res, next) => {
-
-//     List.find({user: req.session.user._id})
-//         .then( lists => {
-//             res.render("products/product-create", {lists});
-//         })
-
-// })
 
 router.get("/create", isLoggedIn, (req, res, next) => {
     let filter = {};
@@ -121,7 +112,7 @@ router.get("/create", isLoggedIn, (req, res, next) => {
     })
     .then(result => {
         data.products = result;
-        console.log(data);
+        //console.log(data);
         res.render("products/products-list", {data})
     })
     .catch(error => {
@@ -152,7 +143,9 @@ router.post("/create", isLoggedIn, (req, res, next) => {
       };
 
     Product.create(productDetails)
-        .then( () => res.redirect("/products"))
+        .then( result => {
+            res.redirect(`${result._id}/edit`)
+        })
         .catch(error => {
             console.log("Error while trying to reach DB", error);
         })
@@ -199,27 +192,70 @@ router.post("/create-manually", isLoggedIn, (req, res, next) => {
         })
 })
 
-// change product entry
+
+
+
+
+
+
+
 router.get("/:productId/edit", isLoggedIn, (req, res, next) => {
+
     const { productId } = req.params
 
-    data = {}
-
+    let filter = {};
+    let data = {} ;
+    
+    data.showEditModal = true;
+    
+    filter.user = req.session.user._id
+    
+    if(req.query.word) {
+        filter.name = {"$regex": req.query.word, "$options": "i"}
+    }
+    if(!req.query.word) {
+        delete filter.name;
+    }
+    
+    if (req.query.maxPrice) {
+        const price = parseFloat(req.query.maxPrice);
+        filter.price = {$lte: price}
+    }
+    if (!req.query.maxPrice) {
+        delete filter.price;
+    }
+    
+    if (req.query.list && req.query.list != "null") {
+        const list = req.query.list;
+        filter.list = list
+    }
+    if (req.query.list && req.query.list == "null") {
+        delete filter.list
+    }
+    
+    data.filter = filter;
+    
     List.find({user: req.session.user._id})
-        .then( lists => {
-            data.lists = lists;
-            return Product.findById(productId)
-        })
-        .then (productDetails => {
-            data.product = productDetails;
-            console.log(data);
-            res.render("products/product-edit", data)
-        })
-        .catch( error => {
-            console.log("Error while trying to reach DB", error);
-            next(error);
-        })
+    .then( result => {
+        data.lists = result;
+    
+        return Product.find(filter);
+    })
+    .then(result => {
+        data.products = result;
+        return Product.findById(productId);
+    })
+    .then (productDetails => {
+        data.product = productDetails;
+        console.log(data);
+        res.render("products/products-list", {data})
+    })
+    .catch(error => {
+        console.log("Error while trying to reach DB", error);
+    })
 })
+
+
 
 
 router.post("/:productId/edit", isLoggedIn, (req, res, next) => {

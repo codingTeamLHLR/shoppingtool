@@ -31,9 +31,19 @@
     </div>
 {{/if}}
 
+{{#if data.showEditModal}}
+    <div id="overlay">
+        {{> productedit}}
+    </div>
+{{/if}}
+
 
 
 <section id="allProducts">
+
+<div class="product" id="addProductCard">
+     <a href="/products/create">Add Product</a>
+</div>
 
 {{#each data.products}}
 <div class="product">
@@ -65,13 +75,5 @@
 
 </div>
 {{/each}}
-
-<div class="product">
-     <a href="/products/create">Create new Product with link</a>
-</div>
-
-<div class="product">
-     <a href="/products/create-manually">Create new Product manually</a>
-</div>
 
 </section>

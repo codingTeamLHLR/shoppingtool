@@ -1,6 +1,7 @@
 body {
   padding: 50px;
-  font-family: 'Quicksand', sans-serif;
+  font-family: 'Inter', sans-serif;
+  font-weight: 300;
   font-size: 14px;
   margin: 0;
   padding: 0;
@@ -10,6 +11,13 @@ body {
 a {
   color: black;
   text-decoration: none;
+  font-family: 'Quicksand', sans-serif;
+  font-weight:600;
+}
+
+button {
+  font-family: 'Quicksand', sans-serif;
+  font-weight:600;
 }
 
 
@@ -17,9 +25,10 @@ a {
 nav {
   display: flex;
   justify-content: space-between;
-  padding: 30px 10vw;
+  padding: 40px 5vw;
   display: flex;
   align-items: center;
+  font-family: 'Quicksand', sans-serif;
 }
 
 nav a {
@@ -135,6 +144,20 @@ nav img {
   background-color: transparent;
   border: none;
   text-decoration: none;
+
+}
+/* #addProductCard {
+  background-color: rgb(255, 189, 21);
+} */
+#addProductCard * {
+  margin: auto;
+  position: absolute;
+  top: 50%;
+  left: 35%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  text-decoration: underline;
+  color: rgb(255, 189, 21);
 }
 
 input {
@@ -150,7 +173,7 @@ input {
 }
 
 #search {
-  width: 79%;
+  width: 78%;
 }
 
 #maxPrice {
@@ -164,7 +187,16 @@ input {
   border-radius: 20px;
   border: none;
   background-color: rgb(255, 189, 21);
+  color:white;
 }
+
+/* #addButton {
+  width: 12%;
+  height: 40px;
+  border-radius: 20px;
+  border: none;
+  background-color: rgb(255, 189, 21);
+} */
 
 input[type='radio'] { 
   width: 20px;
@@ -226,6 +258,16 @@ input[type='radio'] {
   z-index: 1; /* Sit on top */
   border-radius: 5px;
 }
+
+#overlayModal img:first-of-type {
+  width: 30px;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+}
+
+
+
 
 .productForm {
   padding: 10px;
