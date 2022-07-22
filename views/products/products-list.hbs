@@ -2,10 +2,11 @@
 
         <form action="/products" method="GET">
 
-            <input id="search" type="text" name="word" placeholder="What are you looking for?"  value="{{data.filter.name.$regex}}">
-            <input id="maxPrice" type="number" name="maxPrice" placeholder="Max. price" value="{{data.filter.price.$lte}}">
-
-            <button id="findButton" type="submit" name="list" value="{{data.filter.list}}"> Find </button>
+            <div id="searchBar">
+                <input id="search" type="text" name="word" placeholder="What are you looking for?"  value="{{data.filter.name.$regex}}">
+                <input id="maxPrice" type="number" name="maxPrice" placeholder="Max. price" value="{{data.filter.price.$lte}}">
+                <button id="findButton" type="submit" name="list" value="{{data.filter.list}}"> Find </button>
+            </div>
 
             <br>
 

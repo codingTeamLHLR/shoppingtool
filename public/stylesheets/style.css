@@ -97,7 +97,10 @@ nav img {
   display: flex;
   flex-direction: row;
   align-items: center;
+}
 
+#brand a{
+  padding: 0;
 }
 
 #allProducts {
@@ -105,6 +108,7 @@ nav img {
   flex-direction: row;
   flex-wrap: wrap;
   padding: 20px 10vw;
+  position: relative;
 }
 
 /* Product Card - Sizing*/
@@ -122,19 +126,10 @@ nav img {
 
 }
 
-@media (max-width: 1300px) {
-  .product{
-    width: 30%;
-    height: 23vw;
-  }
-}
 
-@media (max-width: 1000px) {
-  .product{
-    width: 46%;
-    height: 35vw;
-  }
-}
+
+
+
 
 
 /* Product Card - Image area */
@@ -237,17 +232,23 @@ input {
   margin: 0 10vw 1vw 10vw;
 }
 
+#searchBar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
 #search {
-  width: 78%;
+  width:50vw;
 }
 
 #maxPrice {
-  width: 10%;
-  margin: 1%;
+  width: 18vw;
+  margin: 0.5vw;
 }
 
 #findButton {
-  width: 8%;
+  width: 10vw;
   height: 40px;
   border-radius: 20px;
   border: none;
@@ -290,7 +291,7 @@ input {
 
 .manage-lists-link {
   color:rgb(255, 189, 21);
-  padding: 0 5vw 0 0;
+  padding: 0 0 0 0;
   text-decoration: underline;
 }
 
@@ -447,4 +448,52 @@ footer {
   position: absolute;
   bottom: 0;
   left: 40vw;
+}
+
+@media (max-width: 1300px) {
+  .product{
+    width: 30%;
+    height: 23vw;
+  }
+}
+
+@media (max-width: 1000px) {
+  .product{
+    width: 46%;
+    height: 55vw;
+  }
+}
+
+@media (max-width: 500px) {
+  .product{
+    width: 100%;
+    height: 70vw;
+  }
+  #addProductCard {
+    height: 40px;
+    width: 26vw;
+    border-radius: 20px;
+    background-color: rgb(255, 189, 21);
+    color: white;
+    z-index: 1;
+    box-shadow: none;
+    position: fixed;
+    bottom: 5vw;
+    right: 5vw;
+  }
+  #addProductCard a{
+    color:white;
+    text-decoration: none;
+    font-size: smaller;
+    margin: 0;
+    position: absolute;
+    left: 20%;
+  }
+
+  #overlayModal {
+    position: absolute;
+    width: 80%;
+    left: 10%;
+    top: 5vh;
+  }
 }
