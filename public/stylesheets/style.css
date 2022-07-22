@@ -111,7 +111,6 @@ nav img {
   position: relative;
 }
 
-/* Product Card - Sizing*/
 
 .product {
   background-color: white;
@@ -129,11 +128,6 @@ nav img {
 
 
 
-
-
-
-/* Product Card - Image area */
-
 .product img {
   width: 100%;
   height: 60%;
@@ -141,7 +135,6 @@ nav img {
   object-position: center;
 }
 
-/* Product Card - Text area */
 
 .productHeader {
   height: 40%;
@@ -177,7 +170,6 @@ nav img {
   padding: 0 20px;
 }
 
-/* Product Card - Edit Buttons (top right) */
 
 .editButtons {
   position: absolute;
@@ -206,9 +198,11 @@ nav img {
   padding: 5px;
   border-radius: 5px;
 }
-/* #addProductCard {
-  background-color: rgb(255, 189, 21);
-} */
+
+.listEditButtons {
+  width: 17px;
+}
+
 #addProductCard * {
   margin: auto;
   position: absolute;
@@ -257,7 +251,6 @@ input {
 }
 
 
-/* List tags area */
 .lists {
   margin: 10px 0;
   display: flex;
@@ -341,7 +334,7 @@ input {
   position: absolute;
   width: 100%;
   height: 100%;
-  z-index: 2; /* Sit on top */
+  z-index: 2; 
 }
 
 #overlayModal {
@@ -354,7 +347,7 @@ input {
   left: 35%;
   -ms-transform: translateY(-50%);
   transform: translateY(-50%);
-  z-index: 1; /* Sit on top */
+  z-index: 1; 
   border-radius: 5px;
 }
 
@@ -415,7 +408,7 @@ input {
 
 }
 
-/* List overlay */
+
 .manage-lists{
   padding: 10px;
 }
@@ -444,10 +437,11 @@ input {
 
 footer {
   text-align: center;
-  padding: 20px;
+  padding: 20px 0;
   position: absolute;
   bottom: 0;
-  left: 40vw;
+  width: 100vw;
+  font-size: x-small;
 }
 
 @media (max-width: 1300px) {
@@ -462,16 +456,10 @@ footer {
     width: 46%;
     height: 55vw;
   }
-}
 
-@media (max-width: 500px) {
-  .product{
-    width: 100%;
-    height: 70vw;
-  }
   #addProductCard {
     height: 40px;
-    width: 26vw;
+    width: 100px;
     border-radius: 20px;
     background-color: rgb(255, 189, 21);
     color: white;
@@ -496,4 +484,13 @@ footer {
     left: 10%;
     top: 5vh;
   }
+}
+
+@media (max-width: 500px) {
+  .product{
+    width: 100%;
+    height: 70vw;
+  }
+
+
 }
