@@ -29,13 +29,7 @@ router.post("/signup", isLoggedOut, (req, res) => {
     });
   }
 
-  // if (passwordHash.length < 8) {
-  //   return res.status(400).render("auth/signup", {
-  //     errorMessage: "Your password needs to be at least 8 characters long.",
-  //   });
-  // }
-
-  //   ! This use case is using a regular expression to control for special characters and min length
+  // Check password safety
   
   const regex = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/;
 
@@ -70,7 +64,8 @@ router.post("/signup", isLoggedOut, (req, res) => {
       .then((user) => {
         // Bind the user to the session object
         req.session.user = user;
-
+        
+        //create sample list for user upon registration
         const lists = [
           {
               name: "My Favorites",
@@ -102,7 +97,7 @@ router.post("/signup", isLoggedOut, (req, res) => {
       return List.create(lists)
        
       })
-      .then((result) => res.redirect("/products"))
+      .then(() => res.redirect("/products"))
       .catch((error) => {
         if (error instanceof mongoose.Error.ValidationError) {
           return res
@@ -135,8 +130,6 @@ router.post("/login", isLoggedOut, (req, res, next) => {
     });
   }
 
-  // Here we use the same logic as above
-  // - either length based parameters or we check the strength of a password
   if (passwordHash.length < 8) {
     return res.status(400).render("auth/login", {
       errorMessage: "Your password needs to be at least 8 characters long.",
@@ -161,16 +154,12 @@ router.post("/login", isLoggedOut, (req, res, next) => {
           });
         }
         req.session.user = user;
-        // req.session.user = user._id; // ! better and safer but in this case we saving the entire user object
-        return res.redirect("/product");
+        return res.redirect("/products");
       });
     })
 
     .catch((err) => {
-      // in this case we are sending the error handling to the error handling middleware that is defined in the error handling file
-      // you can just as easily run the res.status that is commented out below
       next(err);
-      // return res.status(500).render("login", { errorMessage: err.message });
     });
 });
 
