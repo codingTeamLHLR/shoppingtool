@@ -10,5 +10,5 @@ The fullstack application is built with Express. It uses Mongoose for models and
 
 ## Demo
 
-Check out our app here:
-https://shoppingtool.herokuapp.com/
+~~Check out our app here:~~
+~~https://shoppingtool.herokuapp.com/~~
